@@ -1,0 +1,37 @@
+
+services:
+  api_gateway:
+    image: ariss2020/jclick_ai_call_assistant:latest
+    ports:
+      - "80:8000"
+    volumes:
+      - data:/app/static
+    depends_on:
+      - make_automation_agent
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+
+  make_automation_agent:
+    image: ariss2020/make_automation_agent:latest
+    volumes:
+      - data:/app/static
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  data:

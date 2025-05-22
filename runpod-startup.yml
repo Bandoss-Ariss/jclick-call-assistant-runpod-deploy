@@ -1,0 +1,10 @@
+#!/bin/bash
+
+apt-get update
+apt-get install -y docker-compose
+
+wget https://raw.githubusercontent.com/Bandoss-Ariss/jclick-call-assistant-runpod-deploy/main/docker-compose.yml -O /docker-compose.yml
+
+docker-compose -f /docker-compose.yml up -d
+
+echo "Deployment completed. Services available at: http://$(curl -s ifconfig.me)"
